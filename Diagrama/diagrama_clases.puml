@@ -1,0 +1,82 @@
+@startuml
+
+package modelos {
+
+  enum TipoNotificacion {
+    PUBLICACION_CALIFICACIONES
+    RECORDATORIO_MATRICULA
+    AVISO_CANCELACION
+    CONFIRMACION_INSCRIPCION
+  }
+
+  enum EstadoNotificacion {
+    PENDIENTE
+    ENVIADA
+    FALLIDA
+  }
+
+  class Notificacion {
+    -codigo: String
+    -destinatario: String
+    -mensaje: String
+    -fechaEnvio: LocalDateTime
+    -estado: EstadoNotificacion
+    -tipo: TipoNotificacion
+    +enviar(): void
+    +toString(): String
+  }
+
+  class NotificacionEmail {
+    -email: String
+    -asunto: String
+    +enviar(): void
+  }
+
+  class NotificacionSMS {
+    -telefono: String
+    +enviar(): void
+  }
+
+  class NotificacionApp {
+    -tokenDispositivo: String
+    +enviar(): void
+  }
+
+  interface CanalNotificacion {
+    +enviar(notificacion: Notificacion): boolean
+    +obtenerInfoAdicional(): String
+  }
+
+  class CanalEmail {
+    -servidorSMTP: String
+    -puerto: int
+    +enviar(notificacion: Notificacion): boolean
+  }
+
+  class CanalSMS {
+    -apiKey: String
+    -remitente: String
+    +enviar(notificacion: Notificacion): boolean
+  }
+
+  class CanalApp {
+    -firebaseKey: String
+    +enviar(notificacion: Notificacion): boolean
+  }
+
+  class FabricaNotificador {
+    +crearCanal(tipo: String): CanalNotificacion
+  }
+}
+
+Notificacion <|-- NotificacionEmail
+Notificacion <|-- NotificacionSMS
+Notificacion <|-- NotificacionApp
+
+CanalNotificacion <|.. CanalEmail
+CanalNotificacion <|.. CanalSMS
+CanalNotificacion <|.. CanalApp
+
+FabricaNotificador --> CanalNotificacion : crea
+
+@enduml

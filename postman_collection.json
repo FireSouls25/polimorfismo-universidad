@@ -1,0 +1,112 @@
+{
+  "info": {
+    "name": "Notificador Universidad",
+    "description": "API REST para notificaciones universitarias",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Crear notificación Email",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/api/notificaciones",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "notificaciones"]
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"NOT-001\",\n  \"destinatario\": \"Juan Perez\",\n  \"mensaje\": \"Sus calificaciones del semestre están disponibles\",\n  \"tipo\": \"PUBLICACION_CALIFICACIONES\",\n  \"medio\": \"email\",\n  \"email\": \"juan@universidad.edu\",\n  \"asunto\": \"Publicación de Calificaciones\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Crear notificación SMS",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/api/notificaciones",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "notificaciones"]
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"NOT-002\",\n  \"destinatario\": \"Maria Lopez\",\n  \"mensaje\": \"Recuerde que vence el pago de matrícula mañana\",\n  \"tipo\": \"RECORDATORIO_MATRICULA\",\n  \"medio\": \"sms\",\n  \"telefono\": \"+573001234567\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Crear notificación App",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/api/notificaciones",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "notificaciones"]
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"NOT-003\",\n  \"destinatario\": \"Carlos Gomez\",\n  \"mensaje\": \"Clase de Matemáticas cancelada para mañana\",\n  \"tipo\": \"AVISO_CANCELACION\",\n  \"medio\": \"app\",\n  \"tokenDispositivo\": \"fcm-token-12345\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Enviar notificación",
+      "request": {
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/api/notificaciones/1/enviar",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "notificaciones", "1", "enviar"]
+        }
+      }
+    },
+    {
+      "name": "Listar notificaciones",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/notificaciones",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "notificaciones"]
+        }
+      }
+    },
+    {
+      "name": "Obtener notificación",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/notificaciones/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "notificaciones", "1"]
+        }
+      }
+    }
+  ]
+}
